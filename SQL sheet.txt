@@ -1,0 +1,138 @@
+(01)	
+CREATE TABLE Customer
+(
+C_Id  INT NOT NULL PRIMARY KEY,
+C_name VARCHAR (15) NOT NULL,
+Address VARCHAR (50) NOT NUL,
+C_phone CHAR (10), NOT NUL,
+Catalog_Id INT, 
+CONSTRAINT fk_CatCustomer FOREIGN KEY (Catalog_Id)
+REFERENCES Catalog(Catalog_Id),
+)
+
+
+(02)	CREATE TABLE O_details
+(
+O_Id  int  NOT NULL PRIMARY KEY,
+O_time  TIME,
+Qty INT,
+C_Id  int,
+CONSTRAINT fk_CusOrders FOREIGN KEY (C_Id)
+REFERENCES Customer (C_Id),
+)
+
+
+(03)	CREATE TABLE Merchandiser
+(
+M_Id  int  NOT NULL PRIMARY KEY,
+M_Phone CHAR (10),
+M_Name  VARCHAR (30),
+)
+
+
+(04)	 CREATE TABLE Payment
+(
+P_Id  int  NOT NULL PRIMARY KEY,
+P_Date DATE,
+Cust_Id  INT ,
+Amount INT,
+Sh_Id int ,
+CONSTRAINT fk_Shipment_Payment  FOREIGN KEY (Sh_Id)
+REFERENCES Shipment_Details (Sh_Id),
+)
+
+
+(05)	CREATE TABLE Supplier
+(
+S_Id  int  NOT NULL PRIMARY KEY,
+S_name VARCHAR (30) NOT NULL,
+S_Address  VARCHAR (50) NOT NUL,
+)
+
+
+(06)	CREATE TABLE Supplier_Order_details
+(
+S_Id  int  NOT NULL PRIMARY KEY,
+Order_Date DATE,
+Status VARCHAR(30),
+S_Id int ,
+m_Id   int,
+CONSTRAINT fk_SupOrders FOREIGN KEY (S_Id  )
+REFERENCES Suppliers (S_Id  ),
+CONSTRAINT fk_Merch_SupOrders  FOREIGN KEY (m_Id  )
+REFERENCES Merchandiser (m_Id  ),
+)
+
+
+(07)	 CREATE TABLE Supplier_Payment
+    (
+SP_Id  int  NOT NULL PRIMARY KEY,
+Sp_Date DATE ,
+order_Id  int  ,
+M_Id  int,
+CONSTRAINT fk_SupOrders FOREIGN KEY (order_Id  )
+Supplier_order_heder(order_Id  ),
+CONSTRAINT fk_Merch_ SupPayment  FOREIGN KEY (M_Id  )
+REFERENCES Merchandiser (M_Id  )
+)
+
+
+(08)	CREATE TABLE Catalog
+(
+Catalog_Id  int  NOT NULL PRIMARY KEY,
+Categories VARCHAR (15) NOT NULL,
+M_Id  int,
+CONSTRAINT fk_Merch_Catelog  FOREIGN KEY (m_Id  )
+REFERENCES Merchandiser (m_Id  )
+)
+
+
+(09)	CREATE TABLE Item
+(
+I_Code int NOT NULL PRIMARY KEY,
+I_Name VARCHAR (15) NOT NULL,
+I_Price MONEY,
+Cat_Id int,
+O_ID int,
+CONSTRAINT fk_Item_Catelog FOREIGN KEY (Catalog_Id)
+REFERENCES Catalog (Catalog_Id),
+CONSTRAINT fk_OrderDetails_Items FOREIGN KEY (O_ID)
+REFERENCES O_Detail(O_ID),
+)
+
+
+(10)	CREATE TABLE Shipment_Details
+(
+Sh ID INT NOT NULL PRIMARY KEY,
+Ship_Date DATE NOT NULL,
+O Date DATE,
+Item_Code  int ,
+CONSTRAINT fk_Payments_Shipmentdetail  FOREIGN KEY (P_ID  )
+REFERENCES Payments (P_ID),
+)
+
+
+(11)	CREATE TABLE O_Heder
+(
+Heder_Id  int  NOT NULL PRIMARY KEY,
+Heder Title VARCHAR (15) NOT NULL,
+P_Id int,
+O_Id int,
+CONSTRAINT fk_payments_Oheder  FOREIGN KEY (P_ID  )
+REFERENCES payments (P_ID),
+CONSTRAINT fk_ODetails _Oheder  FOREIGN KEY (O_ID  )
+REFERENCES O_Detail(O_ID),
+)
+
+
+(12)	CREATE TABLE Supplier_Order_Heder
+(
+Order_Id  int  NOT NULL PRIMARY KEY,
+Order_Title VARCHAR (15) NOT NULL,
+SP_Id int,
+O_Id int,
+CONSTRAINT fk_Suppliers_SupOrderHeder  FOREIGN KEY (S_ID  )
+REFERENCES Suppliers (S_ID),
+CONSTRAINT fk_ SupplierPayements _ SupOrderHeder  FOREIGN KEY (SP_ID  )
+REFERENCES Suppliers_Payements (SP_ID),
+)
